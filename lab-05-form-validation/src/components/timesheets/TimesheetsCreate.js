@@ -10,10 +10,29 @@ import * as EmployeeActions from '../../actions/EmployeeActionCreator';
 import { withRouter } from 'react-router';
 
 class TimesheetsCreate extends Component {
-  // TODO - implement me
+  constructor(props) {
+    super(props);
+    this.props.employeeActions.listEmployees();
+    this.handleSave = this.handleSave.bind(this);
+  }
 
   render() {
-    return <div />;
+    return (
+      <Grid>
+        <Row>
+          <PageHeader>Timesheet Create</PageHeader>
+        </Row>
+        <Row>
+          <TimesheetForm employees={this.props.employees} handleSave={this.handleSave}/>
+        </Row>
+      </Grid>
+    );
+  }
+
+  handleSave(timesheet){
+    this.props.actions.createTimesheet(timesheet).then(() => {
+      this.props.history.push('/employees/all/timesheets');
+    });
   }
 }
 
